@@ -14,6 +14,7 @@ const App = () => {
   useEffect(() => {
     axios.get("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/user", { withCredentials: true })
       .then((res) => {
+        console.log("User data fetched:", res.data);  
         setUser(res.data || null);
       })
       .catch((err) => {
@@ -22,6 +23,7 @@ const App = () => {
       })
       .finally(() => setLoading(false));
   }, []);
+  
 
   if (loading) {
     return (
