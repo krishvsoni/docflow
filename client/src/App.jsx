@@ -12,7 +12,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/auth/user", { withCredentials: true })
+    axios.get("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/user", { withCredentials: true })
       .then((res) => {
         setUser(res.data || null);
       })
