@@ -147,7 +147,7 @@ DraftRouter.post("/save-to-drive", async (req, res) => {
     res.status(500).json({
       message: "Server error",
       error: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      stack: process.env.NODE_ENV === 'production' ? error.stack : undefined
     });
   }
 });

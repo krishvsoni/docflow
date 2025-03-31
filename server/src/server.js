@@ -34,7 +34,7 @@ app.use((error, req, res, next) => {
     console.error('Error:', error);
     res.status(error.status || 500).json({
       message: error.message || 'Internal Server Error',
-      error: process.env.NODE_ENV === 'development' ? error : {}
+      error: process.env.NODE_ENV === 'production' ? error : {}
     });
   });
   
