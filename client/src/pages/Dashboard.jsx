@@ -17,6 +17,21 @@ const Dashboard = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [notification, setNotification] = useState(null);
 
+
+
+  useEffect(() => {
+    axios.get("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/user", { withCredentials: true })
+      .then((res) => {
+        console.log("User data fetched:", res.data);  
+        setUser(res.data || null);
+      })
+      .catch((err) => {
+        console.error("Error fetching user:", err);
+        setUser(null);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+   
   useEffect(() => {
     if (user) {
       fetchDrafts();
