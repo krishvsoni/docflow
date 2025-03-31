@@ -1,5 +1,21 @@
 {
-   "rewrites":  [
-       {"source": "/(.*)", "destination": "/server"}
-    ]
+  "version": 2,
+  "builds": [
+    { "src": "package.json", "use": "@vercel/static-build" }
+  ],
+  "routes": [
+    {
+      "src": "/api/.*",
+      "dest": "/server/api"
+    },
+    {
+      "src": "/auth/.*",
+      "dest": "/server/auth"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/",
+      "headers": { "Cache-Control": "s-maxage=0" }
+    }
+  ]
 }
