@@ -17,7 +17,7 @@ const Navbar = ({ user }) => {
     
 
     const handleLogout = () => {
-        window.open("http://localhost:5000/auth/logout", "_self");
+        window.open("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/logout", "_self");
         setDropdownOpen(false);
     };
 

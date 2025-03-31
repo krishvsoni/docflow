@@ -13,7 +13,7 @@ passport.use(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:5000/auth/google/callback",
+        callbackURL: "https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/google/callback",
         scope: [
           "profile",
           "email",
@@ -105,8 +105,8 @@ router.get("/google", passport.authenticate("google", {
 router.get(
     "/google/callback",
     passport.authenticate("google", {
-        successRedirect: "http://localhost:5173/dashboard",
-        failureRedirect: "http://localhost:5173/login",
+        successRedirect: "https://docflow-three.vercel.app/dashboard",
+        failureRedirect: "https://docflow-three.vercel.app",
     })
 );
 
@@ -115,7 +115,7 @@ router.get(
 router.get("/logout", (req, res, next) => {
     req.logout((err) => {
         if (err) return next(err);
-        res.redirect("http://localhost:5173");
+        res.redirect( "https://docflow-three.vercel.app");
     });
 });
 

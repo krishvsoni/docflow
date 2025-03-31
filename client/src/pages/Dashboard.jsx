@@ -26,7 +26,7 @@ const Dashboard = ({ user }) => {
   const fetchDrafts = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get(`http://localhost:5000/draft/${user._id}`);
+      const res = await axios.get(`https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/draft/${user._id}`);
       setDrafts(res.data);
     } catch (err) {
       console.error("Error fetching drafts:", err);
@@ -42,7 +42,7 @@ const Dashboard = ({ user }) => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this draft?")) {
       try {
-        await axios.delete(`http://localhost:5000/draft/${id}`);
+        await axios.delete(`https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/draft/${id}`);
         fetchDrafts();
       } catch (err) {
         console.error("Error deleting draft:", err);

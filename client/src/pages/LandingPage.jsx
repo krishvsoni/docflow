@@ -1,6 +1,5 @@
 "use client"
 
-import GoogleLoginButton from "../components/GoogleLoginButton";
 import { ArrowRight, CheckCircle, Edit3, FileText, HardDrive, Lock, Mail } from "lucide-react";
 import Navbar from "../components/Navbar";
 
@@ -32,7 +31,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href="http://localhost:5000/auth/google"
+                  href="https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/google"
                   className="inline-flex items-center justify-center px-6 py-3 bg-[#1a73e8] hover:bg-[#1558b3] text-white rounded-md transition-colors text-lg font-medium"
                 >
                   Start Writing Now 
@@ -82,7 +81,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="http://localhost:5000/auth/google"
+                  href="https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/google"
                   className="inline-flex items-center justify-center px-6 py-3 bg-white text-[#1a73e8] hover:bg-opacity-90 rounded-md transition-colors text-lg font-medium"
                 >
                   Sign Up Free

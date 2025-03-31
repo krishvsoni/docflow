@@ -56,7 +56,7 @@ const paperSizes = [
   { id: "a5", name: "A5", width: "148mm", height: "210mm" },
 ];
 
-const socket = io("http://localhost:5000");
+const socket = io("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net");
 
 export default function DraftPage({ user = { _id: "user123" } }) {
   const [title, setTitle] = useState("");
@@ -224,7 +224,7 @@ export default function DraftPage({ user = { _id: "user123" } }) {
 
   const handleShare = async () => {
     try {
-      await axios.post("http://localhost:5000/share", {
+      await axios.post("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/share", {
         email: shareEmail,
         docId: user._id,
       });

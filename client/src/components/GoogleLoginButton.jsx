@@ -2,7 +2,7 @@ import React from "react";
 
 const GoogleLoginButton = () => {
   const handleLogin = () => {
-    window.open("http://localhost:5000/auth/google", "_self");
+    window.open("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/google", "_self");
   };
 
   return (
