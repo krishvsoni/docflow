@@ -17,7 +17,7 @@ import {
   FileText,
   Share2,
 } from "lucide-react";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 // import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 
 const fonts = ["Arial", "Times New Roman", "Courier New", "Georgia", "Verdana", "Helvetica", "Tahoma", "Trebuchet MS"];
@@ -56,7 +56,7 @@ const paperSizes = [
   { id: "a5", name: "A5", width: "148mm", height: "210mm" },
 ];
 
-const socket = io("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net");
+// const socket = io("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net");
 
 export default function DraftPage({ user = { _id: "user123" } }) {
   const [title, setTitle] = useState("");
@@ -90,17 +90,17 @@ export default function DraftPage({ user = { _id: "user123" } }) {
   const formatDropdownRef = useRef(null);
   const sizeDropdownRef = useRef(null);
 
-  useEffect(() => {
-    socket.emit('joinDocument', user._id);
+  // useEffect(() => {
+  //   socket.emit('joinDocument', user._id);
 
-    socket.on('documentContent', (content) => {
-      setContent(content);
-    });
+  //   socket.on('documentContent', (content) => {
+  //     setContent(content);
+  //   });
 
-    return () => {
-      socket.off('documentContent');
-    };
-  }, [user._id]);
+  //   return () => {
+  //     socket.off('documentContent');
+  //   };
+  // }, [user._id]);
 
   useEffect(() => {
     if (contentEditableRef.current) {
@@ -459,7 +459,7 @@ export default function DraftPage({ user = { _id: "user123" } }) {
               }}
               onInput={(e) => {
                 setContent(e.currentTarget.innerHTML);
-                socket.emit('editDocument', e.currentTarget.innerHTML);
+                // socket.emit('editDocument', e.currentTarget.innerHTML);
               }}
             />
           </div>
