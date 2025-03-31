@@ -1,43 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 import HomePage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import DraftPage from "./pages/Draft";
 
+const Login = () => <HomePage />;
+
 const App = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [currentView, setCurrentView] = useState("home"); 
 
   useEffect(() => {
-    axios.get("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/user", 
-      { withCredentials: true })
+    axios.get("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/user", { withCredentials: true })
       .then((res) => {
         setUser(res.data || null);
-        if (res.data) {
-          setCurrentView("dashboard"); 
-        }
       })
       .catch((err) => {
         console.error("Error fetching user:", err);
         setUser(null);
       })
       .finally(() => setLoading(false));
-  }, []);
-
-  const navigate = (view) => {
-    setCurrentView(view);
-    window.history.pushState({}, "", `/${view === 'home' ? '' : view}`);
-  };
-
-  useEffect(() => {
-    const handlePopState = () => {
-      const path = window.location.pathname.substring(1);
-      setCurrentView(path || 'home');
-    };
-    
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   if (loading) {
@@ -47,22 +30,15 @@ const App = () => {
     );
   }
 
-  const renderView = () => {
-    switch (currentView) {
-      case "dashboard":
-        return user ? <Dashboard user={user} navigate={navigate} /> : navigate("home");
-      case "draft":
-        return user ? <DraftPage user={user} navigate={navigate} /> : navigate("home");
-      case "home":
-      default:
-        return <HomePage navigate={navigate} />;
-    }
-  };
-
   return (
-    <div>
-      {renderView()}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Login />} />
+        <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/" replace />} />
+        <Route path="/draft" element={user ? <DraftPage user={user} /> : <Navigate to="/" replace />} />
+
+      </Routes>
+    </Router>
   );
 };
 
