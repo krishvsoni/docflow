@@ -20,6 +20,22 @@ const Dashboard = ({ user }) => {
 
    
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/user", {
+          withCredentials: true, 
+        });
+        setUser(res.data); 
+      } catch (err) {
+        console.error("Error fetching user:", err);
+        setUser(null); 
+      }
+    };
+
+    fetchUser();
+  }, []); 
+
+  useEffect(() => {
     if (user) {
       fetchDrafts();
     }
@@ -27,13 +43,19 @@ const Dashboard = ({ user }) => {
 
   const fetchDrafts = async () => {
     setIsLoading(true);
-    setError(null); 
+    setError(null);
+
     try {
-      const res = await axios.get(`https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/draft/${user._id}`);
+      const res = await axios.get(
+        `https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/draft/${user._id}`,
+        {
+          withCredentials: true, 
+        }
+      );
       setDrafts(res.data);
     } catch (err) {
       console.error("Error fetching drafts:", err);
-      setError("Failed to load drafts. Please try again later."); 
+      setError("Failed to load drafts. Please try again later.");
     } finally {
       setIsLoading(false);
     }

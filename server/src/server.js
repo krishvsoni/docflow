@@ -15,16 +15,25 @@ const PORT = process.env.PORT || 5000;
 
 
 
-app.use(cors({ origin: ["http://localhost:5173","https://docflow-three.vercel.app"], credentials: true }));
+app.use(cors({ origin: process.env.NODE_ENV === "production" 
+    ? "https://docflow-three.vercel.app" 
+    : "http://localhost:5173", credentials: true }));
+
 app.use(express.json());
+
 app.use(
     session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: true,
-        cookie: { secure: false, maxAge: 72 * 60 * 60 * 1000 } 
+      secret: process.env.SESSION_SECRET ,
+      resave: false,
+      saveUninitialized: false, 
+      cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true, 
+        maxAge: 72 * 60 * 60 * 1000, 
+      },
     })
-);
+  );
+  
 app.use(passport.initialize());
 app.use(passport.session());
 
