@@ -90,7 +90,7 @@ const EditDraft = ({ draft, onClose, onSave }) => {
 
       saveTimeoutRef.current = setTimeout(async () => {
         try {
-          await axios.put(`https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/draft/edit/${draft._id}`, {
+          await axios.put(`http://localhost:5000/draft/edit/${draft._id}`, {
             title,
             content,
             formatting: {

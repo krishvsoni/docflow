@@ -224,7 +224,7 @@ export default function DraftPage({ user = { _id: "user123" } }) {
 
   const handleShare = async () => {
     try {
-      await axios.post("https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/share", {
+      await axios.post("http://localhost:5000/share", {
         email: shareEmail,
         docId: user._id,
       });

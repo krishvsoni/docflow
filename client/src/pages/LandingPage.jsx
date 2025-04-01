@@ -31,7 +31,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href="https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/google"
+                  href="http://localhost:5000/auth/google"
                   className="inline-flex items-center justify-center px-6 py-3 bg-[#1a73e8] hover:bg-[#1558b3] text-white rounded-md transition-colors text-lg font-medium"
                 >
                   Start Writing Now 

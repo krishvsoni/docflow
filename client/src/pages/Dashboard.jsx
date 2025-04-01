@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,24 +17,19 @@ const Dashboard = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [notification, setNotification] = useState(null);
 
-
-
-   
   useEffect(() => {
     if (user) {
       fetchDrafts();
     }
-  }, [user]); 
+  }, [user]);
 
   const fetchDrafts = async () => {
     setIsLoading(true);
-    setError(null); 
     try {
-      const res = await axios.get(`https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/draft/${user._id}`);
+      const res = await axios.get(`http://localhost:5000/draft/${user._id}`);
       setDrafts(res.data);
     } catch (err) {
       console.error("Error fetching drafts:", err);
-      setError("Failed to load drafts. Please try again later."); 
     } finally {
       setIsLoading(false);
     }
@@ -46,7 +42,7 @@ const Dashboard = ({ user }) => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this draft?")) {
       try {
-        await axios.delete(`https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/draft/${id}`);
+        await axios.delete(`http://localhost:5000/draft/${id}`);
         fetchDrafts();
       } catch (err) {
         console.error("Error deleting draft:", err);
@@ -100,7 +96,7 @@ const Dashboard = ({ user }) => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center hmb-8 gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-800">
                 {getGreeting()}, {user.name.split(" ")[0]}
