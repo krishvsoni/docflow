@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -24,15 +23,17 @@ const Dashboard = ({ user }) => {
     if (user) {
       fetchDrafts();
     }
-  }, [user]);
+  }, [user]); 
 
   const fetchDrafts = async () => {
     setIsLoading(true);
+    setError(null); 
     try {
       const res = await axios.get(`https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/draft/${user._id}`);
       setDrafts(res.data);
     } catch (err) {
       console.error("Error fetching drafts:", err);
+      setError("Failed to load drafts. Please try again later."); 
     } finally {
       setIsLoading(false);
     }

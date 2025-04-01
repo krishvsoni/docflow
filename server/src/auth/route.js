@@ -125,13 +125,20 @@ router.get("/logout", (req, res, next) => {
     });
 });
 
-router.get("/user", (req, res) => {
-    if (req.isAuthenticated()) {
-        res.json(req.user);
-    } else {
-        res.json(null);
-    }
+router.get("/user", async (req, res) => {
+  if (req.isAuthenticated()) {
+      const user = await User.findById(req.user.id);
+      res.json({
+          name: user.name,
+          email: user.email,
+          profilePic: user.profilePic,
+          // accessToken: user.accessToken || null,
+      });
+  } else {
+      res.json(null);
+  }
 });
+
 
 
 
