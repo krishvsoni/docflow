@@ -9,49 +9,51 @@ dotenv.config();
 const router = express.Router();
 
 passport.use(
-    new GoogleStrategy(
-      {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/google/callback",
-        scope: [
-          "profile",
-          "email",
-          "https://www.googleapis.com/auth/drive",
-          "https://www.googleapis.com/auth/drive.file",
-          "https://www.googleapis.com/auth/drive.appdata",
-          "https://www.googleapis.com/auth/drive.metadata",
-          "https://www.googleapis.com/auth/drive.metadata.readonly",
-          "https://www.googleapis.com/auth/drive.readonly",
-        ],
-        accessType: "offline",
-        prompt: "consent",
-      },
-      async (accessToken, refreshToken, profile, done) => {
-        try {
-          let user = await User.findOne({ googleId: profile.id });
+  new GoogleStrategy(
+    {
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.NODE_ENV === "production"
+      ? "https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/google/callback"
+      : "http://localhost:5000/auth/google/callback",
+    scope: [
+      "profile",
+      "email",
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.appdata",
+      "https://www.googleapis.com/auth/drive.metadata",
+      "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.readonly",
+    ],
+    accessType: "offline",
+    prompt: "consent",
+    },
+    async (accessToken, refreshToken, profile, done) => {
+    try {
+      let user = await User.findOne({ googleId: profile.id });
   
-          if (!user) {
-            user = new User({
-              googleId: profile.id,
-              name: profile.displayName,
-              email: profile.emails[0].value,
-              profilePic: profile.photos[0].value,
-              accessToken,
-              refreshToken,
-            });
-          } else {
-            user.accessToken = accessToken;
-            user.refreshToken = refreshToken;
-          }
-  
-          await user.save();
-          return done(null, user);
-        } catch (err) {
-          return done(err, null);
-        }
+      if (!user) {
+      user = new User({
+        googleId: profile.id,
+        name: profile.displayName,
+        email: profile.emails[0].value,
+        profilePic: profile.photos[0].value,
+        accessToken,
+        refreshToken,
+      });
+      } else {
+      user.accessToken = accessToken;
+      user.refreshToken = refreshToken;
       }
-    )
+  
+      await user.save();
+      return done(null, user);
+    } catch (err) {
+      return done(err, null);
+    }
+    }
+  )
   );
 
 passport.serializeUser((user, done) => {
@@ -103,11 +105,15 @@ router.get("/google", passport.authenticate("google", {
     }
   });
 router.get(
-    "/google/callback",
-    passport.authenticate("google", {
-        successRedirect: "https://docflow-three.vercel.app/dashboard",
-        failureRedirect: "https://docflow-three.vercel.app",
-    })
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: process.env.NODE_ENV === "production"
+      ? "https://docflow-three.vercel.app/dashboard"
+      : "http://localhost:5173/dashboard",
+    failureRedirect: process.env.NODE_ENV === "production"
+      ? "https://docflow-three.vercel.app"
+      : "http://localhost:5173",
+  })
 );
 
 
