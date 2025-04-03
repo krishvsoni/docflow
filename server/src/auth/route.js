@@ -15,7 +15,7 @@ passport.use(
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.NODE_ENV === "production"
       ? "https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/google/callback"
-      : "http://localhost:5000/auth/google/callback",
+      : "https://docflow-bncjgqaya5gtfwb0.eastasia-01.azurewebsites.net/auth/google/callback",
     scope: [
       "profile",
       "email",
